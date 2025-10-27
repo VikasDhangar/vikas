@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy Birthday — For You ❤️</title>
+<style>
+  :root{
+    --bg1:#fff0f2;
+    --bg2:#fff7f0;
+    --accent:#ff6b81;
+    --accent2:#fd79a8;
+    --muted:#6b6f72;
+    --glass: rgba(255,255,255,0.85);
+  }
+
+  /* Basic reset */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    background: radial-gradient(circle at 10% 20%, #fff7f0, #ffeef2, #fff1e6);
+    min-height: 100vh;
+}
+
+
+  /* Card */
+  .card{
+    width:100%;
+    max-width:980px;
+    border-radius:18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.92));
+    box-shadow: 0 20px 50px rgba(19,19,24,0.12);
+    overflow:hidden;
+    position:relative;
+    margin: 20px auto;
+  }
+
+  /* Top hero */
+  .hero{
+    padding:36px 40px;
+    display:grid;
+    grid-template-columns: 1fr 320px;
+    gap:24px;
+    align-items:center;
+  }
+
+  .hero-left h1{
+    font-size:2.6rem;
+    color:var(--accent);
+    letter-spacing:0.6px;
+    margin-bottom:8px;
+    font-weight:700;
+    text-shadow: 0 2px 12px rgba(253,121,152,0.08);
+    font-family: "Dancing Script", "Poppins", serif;
+  }
+  .hero-left p.lead{
+    color:var(--muted);
+    font-size:1.05rem;
+    margin-bottom:18px;
+  }
+  .hero-left .small{
+    color:#8b8f94;
+    font-size:0.92rem;
+  }
+
+  .hero-right{
+    display:flex;
+    justify-content:center;
+  }
+  .profile{
+    width:260px;height:260px;border-radius:18px;
+    overflow:hidden;
+    border:8px solid rgba(255,234,167,0.9);
+    box-shadow: 0 12px 30px rgba(253,121,152,0.14);
+    background:linear-gradient(180deg,#fff,#ffeef2);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .profile img{width:100%;height:100%;object-fit:cover;display:block}
+  .profile .pulse{
+    position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    box-shadow:0 0 0 0 rgba(253,121,152,0.18);
+    animation:pulse 2.6s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(253,121,152,0.18)}
+    70%{box-shadow:0 0 0 18px rgba(253,121,152,0.02)}
+    100%{box-shadow:0 0 0 18px rgba(253,121,152,0.00)}
+  }
+
+  /* Controls row */
+  .controls{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-top:12px;
+  }
+  .btn{
+    background:linear-gradient(180deg,var(--accent),var(--accent2));
+    color:white;padding:10px 14px;border-radius:12px;border:0;cursor:pointer;
+    box-shadow: 0 6px 18px rgba(253,121,152,0.16);
+    font-weight:600;font-size:0.95rem;
+  }
+  .btn.secondary{
+    background:transparent;color:var(--accent);border:2px solid rgba(253,121,152,0.14);
+    box-shadow:none;font-weight:700;
+  }
+  .mute{
+    display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.04);
+    cursor:pointer;font-weight:600;color:#444;
+  }
+
+  /* heart button */
+  .heart-btn{
+    display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;background:linear-gradient(90deg,#fff,#fff);
+    border:1px solid rgba(253,121,152,0.08);cursor:pointer;font-weight:700;color:var(--accent);
+    transition:transform .18s ease;
+  }
+  .heart-btn:active{transform:scale(.98)}
+  .heart-ic{font-size:1.05rem;color:var(--accent2);}
+
+  /* sections */
+  .sections{padding:10px 40px 36px 40px}
+  .section{
+    margin:26px 0;padding:18px;border-radius:12px;background:var(--glass);backdrop-filter: blur(6px);
+  }
+  .section h3{color:var(--accent);margin-bottom:8px;font-family:"Dancing Script";font-size:1.6rem}
+  .message p{line-height:1.6;color:#333;font-size:1.02rem}
+
+  /* typing effect */
+  .typing{
+    font-weight:600;color:#c0392b;font-size:1.08rem;
+    height:36px;
+    overflow:hidden;
+    white-space:nowrap;
+    border-right:3px solid rgba(0,0,0,0.06);
+    animation: caret 0.9s steps(1) infinite;
+  }
+  @keyframes caret{50%{border-color:transparent}}
+
+  /* hearts floating global container */
+  .hearts-layer{pointer-events:none;position:fixed;inset:0;z-index:1200;overflow:hidden}
+
+  /* gallery */
+  .gallery-grid{
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    gap:12px;
+  }
+  .gallery-item{
+    border-radius:12px;overflow:hidden;position:relative;cursor:pointer;
+    transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s;
+  }
+  .gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+  .gallery-item:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(25,21,30,0.08)}
+  .gallery-item:hover img{transform:scale(1.06);}
+
+  /* make responsive */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr 240px;padding:22px}
+    .gallery-grid{grid-template-columns: repeat(3,1fr)}
+  }
+  @media (max-width:640px){
+    .hero{grid-template-columns:1fr;padding:18px;gap:10px}
+    .hero-right{order:-1;display:flex;justify-content:center}
+    .gallery-grid{grid-template-columns: repeat(2,1fr)}
+    .profile{width:220px;height:220px}
+  }
+
+  /* lightbox */
+  .lightbox{
+    position:fixed;inset:0;background:rgba(3,3,6,0.7);display:flex;align-items:center;justify-content:center;padding:20px;
+    z-index:1300;opacity:0;visibility:hidden;transition:opacity .22s, visibility .22s;
+  }
+  .lightbox.open{opacity:1;visibility:visible}
+  .lightbox-inner{max-width:900px;width:100%;max-height:90vh;display:flex;align-items:center;gap:20px}
+  .lightbox-img{width:100%;height:80vh;object-fit:contain;border-radius:10px;background:#111}
+  .lightbox .nav{color:white;font-size:2rem;cursor:pointer;user-select:none;padding:10px}
+  .lightbox .closebtn{position:absolute;top:18px;right:20px;font-size:1.4rem;color:white;cursor:pointer}
+
+  /* little caption */
+  .caption{font-size:0.95rem;color:#fff;margin-top:8px;text-align:center}
+  .credit{font-size:0.82rem;color:#888;margin-top:6px}
+
+  /* floating balloons hearts (subtle) */
+  .bg-hearts{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .bg-heart{position:absolute;width:120px;height:120px;left:12%;top:8%;background:radial-gradient(circle at 30% 30%, rgba(253,121,152,0.14), rgba(253,121,152,0.05));border-radius:50%;transform:rotate(15deg);filter:blur(12px)}
+
+  /* small helpers */
+  .row{display:flex;gap:12px;align-items:center}
+  .muted{color:#7d7f82}
+  footer.card-footer{padding:16px 40px;background:transparent;text-align:center;color:#6d6f73;font-size:0.92rem}
+</style>
+</head>
+<body>
+  <div class="card" id="top">
+    <!-- subtle background hearts -->
+    <div class="bg-hearts">
+      <div class="bg-heart" style="left:8%;top:6%;width:160px;height:160px"></div>
+      <div class="bg-heart" style="left:72%;top:18%;width:120px;height:120px;background:radial-gradient(circle at 30% 30%, rgba(255,206,150,0.14), rgba(255,206,150,0.02))"></div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-left">
+        <h1>Happy Birthday, <span id="herName">[Anchalus beta]</span> 🎂</h1>
+        <p class="lead">Today I celebrate you — your smile, your heart, your beautiful soul. You're everything to me.</p>
+
+        <div class="typing" id="typing"></div>
+
+        <div class="controls" style="margin-top:16px">
+          <button class="btn heart-btn" id="heartBtn" title="Send hearts">
+            <span class="heart-ic">❤️</span> Heart
+          </button>
+
+          <button class="btn secondary" id="surpriseBtn" style="background:linear-gradient(90deg,#fff,#fff)">
+            memories
+          </button>
+
+          <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+            <button class="mute" id="playPauseBtn" title="Play / Pause music"> ▶ Play</button>
+            <div style="width:1px;height:28px;background:rgba(0,0,0,0.06)"></div>
+            <button class="mute" id="muteBtn" title="Mute / Unmute">🔊</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="small muted"></div>
+      </div>
+
+      <div class="hero-right">
+        <div class="profile" title="Click to celebrate!">
+          <!-- Replace 'src' with your gf's photo name (e.g., mylove.jpg) -->
+          <img src="top1.jpg" alt="her photo" class="birthday-photo" id="mainPhoto">
+          <div class="pulse"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sections">
+      <section class="section message">
+        <h3>My Message</h3>
+        <p class="message">
+          Dear <strong id="herName2">Anchalus</strong>,<br>
+          Every moment with you feels like a beautiful dream. Bs khali ye to kehne ki bat hai asa moment khabhi aaya hi ni jo meh yad rakh sku. but Thank you for being my sunshine.
+        </p>
+      </section>
+
+      <section class="section">
+        <h3>selfish girl</h3>
+        <div class="gallery-grid" id="gallery">
+          <!-- 8 images — replace with your own images (names or paths) -->
+          <div class="gallery-item"><img src="1.jpg" alt="mem1" data-index="0"></div>
+          <div class="gallery-item"><img src="2.jpg" alt="mem2" data-index="1"></div>
+          <div class="gallery-item"><img src="3.jpg" alt="mem3" data-index="2"></div>
+          <div class="gallery-item"><img src="4.jpg" alt="mem4" data-index="3"></div>
+          <div class="gallery-item"><img src="9.jpg" alt="mem5" data-index="4"></div>
+          <div class="gallery-item"><img src="6.jpg" alt="mem6" data-index="5"></div>
+          <div class="gallery-item"><img src="10.jpg" alt="mem7" data-index="6"></div>
+          <div class="gallery-item"><img src="11.jpg" alt="mem8" data-index="7"></div>
+        </div>
+        <div class="credit">LOVE YOU BBY 💖</div>
+      </section>
+
+      <section class="section">
+        <h3>Wishes</h3>
+        <ul style="list-style: none; padding-left:0; margin-top:12px">
+          <li style="background:#fff;padding:12px;border-radius:10px;margin-bottom:8px">🌸 May your year be full of smiles and surprises.</li>
+          <li style="background:#fff;padding:12px;border-radius:10px;margin-bottom:8px">💖 Wishing you love, peace, and endless joy.</li>
+          <li style="background:#fff;padding:12px;border-radius:10px">🎉 Again happy brithday dear</li>
+        </ul>
+      </section>
+    </div>
+
+    <footer class="card-footer">Made ❤️ by Your   <strong id="yourName">"Your Vicky"</strong></footer>
+  </div>
+
+  <!-- hearts layer -->
+  <div class="hearts-layer" id="heartsLayer"></div>
+
+  <!-- lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+      <div class="nav" id="prev">&larr;</div>
+      <img src="" alt="view" id="lightboxImg" class="lightbox-img">
+      <div class="nav" id="next">&rarr;</div>
+    </div>
+    <div class="closebtn" id="closeLightbox">✕</div>
+    <div class="caption" id="lightCaption"></div>
+  </div>
+
+  <!-- audio (soft guitar) -->
+  <audio id="bgAudio" loop preload="auto">
+    <!-- Replace this src with your own file if you want:
+         Example: <source src="mylovesong.mp3" type="audio/mpeg"> -->
+    <source src="mp2.mp3" type="audio/mpeg">
+    <!-- If the above fails, the browser will show controls as fallback -->
+    Your browser does not support the audio element.
+  </audio>
+
+<script>
+  /***** USER CUSTOMIZATION: Change names here if you want *****/
+  const HER_NAME = "ANCHALUS";        // visible names (replace)
+  const YOUR_NAME = "VIKAS";            // your name
+  /***********************************************************/
+
+  // apply names to the DOM
+  document.getElementById('herName').textContent = HER_NAME;
+  document.getElementById('herName2').textContent = HER_NAME;
+  document.getElementById('yourName').textContent = YOUR_NAME;
+
+  /* TYPING EFFECT */
+  const phrases = [
+    "You make my world brighter ✨",
+    "My heart is yours, always ❤️",
+    "Thank you for being you.",
+    "Today we celebrate your beautiful soul."
+  ];
+  const typingEl = document.getElementById('typing');
+  let pi=0, ci=0;
+  function typeLoop(){
+    const phrase = phrases[pi];
+    if(ci <= phrase.length){
+      typingEl.textContent = phrase.slice(0, ci);
+      ci++;
+      setTimeout(typeLoop, 60);
+    } else {
+      setTimeout(()=>{ // pause then delete
+        deleteLoop();
+      }, 1200);
+    }
+  }
+  function deleteLoop(){
+    const phrase = phrases[pi];
+    if(ci >= 0){
+      typingEl.textContent = phrase.slice(0, ci);
+      ci--;
+      setTimeout(deleteLoop, 30);
+    } else {
+      pi = (pi+1) % phrases.length;
+      setTimeout(typeLoop, 200);
+    }
+  }
+  typeLoop();
+
+  /* BACKGROUND MUSIC: play/pause and mute/unmute controls */
+  const audio = document.getElementById('bgAudio');
+  const playPauseBtn = document.getElementById('playPauseBtn');
+  const muteBtn = document.getElementById('muteBtn');
+
+  // Try to autoplay politely
+  function tryAutoPlay(){
+    audio.volume = 0.15;
+    audio.play().then(()=> {
+      playPauseBtn.textContent = "⏸ Pause";
+      muteBtn.textContent = "🔊";
+    }).catch(()=> {
+      // browsers often block autoplay; show Play
+      playPauseBtn.textContent = "▶ Play";
+    });
+  }
+  // polite attempt
+  tryAutoPlay();
+
+  playPauseBtn.addEventListener('click', () => {
+    if(audio.paused){
+      audio.play(); playPauseBtn.textContent = "⏸ Pause";
+    } else {
+      audio.pause(); playPauseBtn.textContent = "▶ Play";
+    }
+  });
+
+  muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? "🔇" : "🔊";
+  });
+
+  /* HEARTS animation: create floating hearts */
+  const heartsLayer = document.getElementById('heartsLayer');
+  function spawnHeart(xPercent){
+    const el = document.createElement('div');
+    el.className = 'floating-heart';
+    const size = (Math.random()*18) + 14;
+    el.style.position = 'absolute';
+    el.style.left = (xPercent || (Math.random()*100)) + '%';
+    el.style.bottom = '-40px';
+    el.style.pointerEvents = 'none';
+    el.style.zIndex = 1299;
+    el.style.width = size + 'px';
+    el.style.height = size + 'px';
+    el.style.borderRadius = '50% 50% 50% 50% / 60% 60% 40% 40%';
+    el.style.background = `radial-gradient(circle at 30% 30%, ${randomColor()}, ${randomColor(0.85)})`;
+    el.style.opacity = 0.95;
+    el.style.transform = `translateY(0) rotate(${Math.random()*40-20}deg)`;
+    el.style.transition = `transform 3.2s cubic-bezier(.2,.9,.3,1), opacity 1s linear`;
+    heartsLayer.appendChild(el);
+    // animate upward
+    requestAnimationFrame(()=> {
+      const drift = (Math.random()*30 - 15);
+      el.style.transform = `translateY(-120vh) translateX(${drift}px) rotate(${Math.random()*720-360}deg)`;
+      el.style.opacity = 0.0;
+    });
+    setTimeout(()=> el.remove(), 3500);
+  }
+  function randomColor(alpha){
+    const a = (alpha===undefined) ? 1 : alpha;
+    const choices = ["#ff6b81","#fd79a8","#ffeaa7","#ffd1dc","#ff9aa2"];
+    return choices[Math.floor(Math.random()*choices.length)];
+  }
+
+  // fire a bunch of hearts (for heart button)
+  document.getElementById('heartBtn').addEventListener('click', () => {
+    for(let i=0;i<30;i++){
+      setTimeout(()=> spawnHeart(), i*40);
+    }
+  });
+
+  // click on photo to spawn confetti hearts around it
+  const mainPhoto = document.getElementById('mainPhoto');
+  mainPhoto.addEventListener('click', (ev) => {
+    const rect = mainPhoto.getBoundingClientRect();
+    // spawn hearts near photo center
+    for(let i=0;i<40;i++){
+      setTimeout(()=> {
+        const x = ((rect.left + rect.width/2)/window.innerWidth)*100 + (Math.random()*12-6);
+        spawnHeart(x);
+      }, i*30);
+    }
+  });
+
+  /* Surprise button: scroll to gallery and spawn hearts */
+  document.getElementById('surpriseBtn').addEventListener('click', () => {
+    document.getElementById('gallery').scrollIntoView({behavior:'smooth', block:'center'});
+    for(let i=0;i<60;i++){
+      setTimeout(()=> spawnHeart(), i*50);
+    }
+  });
+
+  /* Gallery & Lightbox logic */
+  const gallery = Array.from(document.querySelectorAll('#gallery img'));
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const closeBtn = document.getElementById('closeLightbox');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  let currentIndex = 0;
+  function openLightbox(i){
+    currentIndex = i;
+    lightboxImg.src = gallery[i].src;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLight(){
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  gallery.forEach((img, idx) => {
+    img.addEventListener('click', ()=> openLightbox(idx));
+  });
+  closeBtn.addEventListener('click', closeLight);
+  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLight(); });
+  prevBtn.addEventListener('click', (e)=> { e.stopPropagation(); currentIndex = (currentIndex-1+gallery.length)%gallery.length; lightboxImg.src = gallery[currentIndex].src; });
+  nextBtn.addEventListener('click', (e)=> { e.stopPropagation(); currentIndex = (currentIndex+1)%gallery.length; lightboxImg.src = gallery[currentIndex].src; });
+
+  // keyboard navigation for lightbox
+  document.addEventListener('keydown', (e)=>{
+    if(!lightbox.classList.contains('open')) return;
+    if(e.key === 'Escape') closeLight();
+    if(e.key === 'ArrowLeft') prevBtn.click();
+    if(e.key === 'ArrowRight') nextBtn.click();
+  });
+
+  /* small helpful touches: spawn subtle hearts every X seconds */
+  setInterval(()=> {
+    // randomly spawn 1 or 2 small hearts
+    if(Math.random() > 0.6) spawnHeart(Math.random()*100);
+  }, 4000);
+
+  /* If the user clicks anywhere on top title, quickly flash hearts */
+  document.querySelector('.hero-left h1').addEventListener('click', ()=> {
+    for(let i=0;i<18;i++) setTimeout(()=> spawnHeart(), i*60);
+  });
+
+  /* Utility: ensure audio is set to low volume on load */
+  audio.volume = 0.14;
+
+  /* Accessibility: if autoplay blocked, change button text on user gesture */
+  document.addEventListener('click', function autoPlayUnlock() {
+    if(audio.paused){
+      try { audio.play(); playPauseBtn.textContent = "⏸ Pause"; }
+      catch(e){}
+    }
+    // remove once attempted
+    document.removeEventListener('click', autoPlayUnlock);
+  });
+
+  /* Helpful: if user wants to replace placeholders quickly */
+  console.log("Page loaded. To customize, replace gallery image 'src' attributes and the audio source in the <audio> tag.");
+
+</script>
+</body>
+</html>
